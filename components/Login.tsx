@@ -1,19 +1,25 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
 
 import { IMAGES } from "@/constants/images";
-import { colors, fontFamily } from "@/constants/styles";
+import { borderRadius, colors, margin, padding } from "@/constants/styles";
+import { Paragraph, Title } from "./texts";
+import { ButtonPrimary } from "./buttons";
 
 const Login = () => {
   return (
     <View>
       <Image source={IMAGES.login} style={styles.image} resizeMode="cover" />
       <View style={styles.container}>
-        <Text style={styles.text}>AI Travel Planner</Text>
-        <Text style={styles.paragraph}>AI Travel Planner...</Text>
-
-        <View style={styles.button}>
-          <Text style={styles.textButton}>Sign In With Google</Text>
-        </View>
+        <Title name="AI Travel Planner" style={styles.title} />
+        <Paragraph
+          text="Discover your next adventure effortlessly. Personalized itineraries at
+          your fingertips. Travel smarter with AI-driver insights"
+          style={styles.paragraph}
+        />
+        <ButtonPrimary
+          name="Sign In With Google"
+          style={styles.buttonPrimary}
+        />
       </View>
     </View>
   );
@@ -29,30 +35,19 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
     marginTop: -20,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    borderTopLeftRadius: borderRadius.xl,
+    borderTopRightRadius: borderRadius.xl,
     height: "100%",
-    padding: 15,
+    padding: padding.lg,
   },
-  text: {
-    fontSize: 40,
-    fontFamily: fontFamily.primaryBold,
+  title: {
+    marginVertical: margin.lg,
     textAlign: "center",
   },
   paragraph: {
-    fontSize: 14,
     textAlign: "center",
-    color: colors.gray,
   },
-  button: {
-    padding: 15,
-    backgroundColor: colors.primary,
-    borderRadius: 99,
+  buttonPrimary: {
     marginTop: "25%",
-  },
-  textButton: {
-    color: colors.white,
-    textAlign: "center",
-    fontSize: 18,
   },
 });
