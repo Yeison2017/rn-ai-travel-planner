@@ -16,6 +16,6 @@ export default Paragraph;
 const styles = StyleSheet.create({
   text: {
     fontSize: fontSize.md,
-    color: colors.gray,
+    color: colors.gray500,
   },
 });

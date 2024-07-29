@@ -1,11 +1,14 @@
 import { StyleSheet, View, Image } from "react-native";
+import { useRouter } from "expo-router";
 
 import { IMAGES } from "@/constants/images";
-import { borderRadius, colors, margin, padding } from "@/constants/styles";
+import { borderRadius, colors, space } from "@/constants/styles";
 import { Paragraph, Title } from "./texts";
 import { ButtonPrimary } from "./buttons";
 
 const Login = () => {
+  const router = useRouter();
+
   return (
     <View>
       <Image source={IMAGES.login} style={styles.image} resizeMode="cover" />
@@ -17,7 +20,8 @@ const Login = () => {
           style={styles.paragraph}
         />
         <ButtonPrimary
-          name="Sign In With Google"
+          onPress={() => router.push("auth/sign-in")}
+          name="Get Started"
           style={styles.buttonPrimary}
         />
       </View>
@@ -38,10 +42,10 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: borderRadius.xl,
     borderTopRightRadius: borderRadius.xl,
     height: "100%",
-    padding: padding.lg,
+    padding: space.lg,
   },
   title: {
-    marginVertical: margin.lg,
+    marginVertical: space.lg,
     textAlign: "center",
   },
   paragraph: {
