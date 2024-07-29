@@ -14,7 +14,7 @@ interface Props {
   style?: StyleProp<ViewStyle>;
 }
 
-const ButtonPrimary = ({ name, onPress, style }: Props) => {
+const ButtonSecondary = ({ name, onPress, style }: Props) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -26,16 +26,17 @@ const ButtonPrimary = ({ name, onPress, style }: Props) => {
   );
 };
 
-export default ButtonPrimary;
+export default ButtonSecondary;
 
 const styles = StyleSheet.create({
   button: {
     padding: space.md,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.white,
     borderRadius: borderRadius.md,
+    borderColor: colors.gray400,
+    borderWidth: 1,
   },
   textButton: {
-    color: colors.white,
     textAlign: "center",
     fontSize: fontSize.md,
   },
