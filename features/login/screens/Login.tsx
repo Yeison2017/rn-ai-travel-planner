@@ -3,8 +3,7 @@ import { useRouter } from "expo-router";
 
 import { IMAGES } from "@/constants/images";
 import { borderRadius, colors, space } from "@/constants/styles";
-import { Paragraph, Title } from "./texts";
-import { ButtonPrimary } from "./buttons";
+import { ButtonPrimary, Paragraph, Title } from "@/components";
 
 const Login = () => {
   const router = useRouter();
@@ -20,7 +19,7 @@ const Login = () => {
           style={styles.paragraph}
         />
         <ButtonPrimary
-          onPress={() => router.push("auth/sign-in")}
+          onPress={() => router.push("/auth/sign-in")}
           name="Get Started"
           style={styles.buttonPrimary}
         />

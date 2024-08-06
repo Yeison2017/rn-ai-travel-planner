@@ -41,7 +41,7 @@ const SignIn = () => {
           <ButtonPrimary name="Sign In" />
           <ButtonSecondary
             name="Create Account"
-            onPress={() => router.replace("auth/sign-up")}
+            onPress={() => router.replace("/auth/sign-up")}
           />
         </View>
       </ScrollView>
