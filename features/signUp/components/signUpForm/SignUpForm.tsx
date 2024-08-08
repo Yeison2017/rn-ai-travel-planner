@@ -3,7 +3,7 @@ import { Formik } from "formik";
 
 import { colors, space } from "@/constants/styles";
 import { ButtonPrimary, Input } from "@/components";
-import { initialValues } from "./form";
+import { initialValues, validationSchema } from "./form";
 import { CreateAccount } from "../../controllers";
 
 interface Props {
@@ -17,26 +17,36 @@ const SignUpForm = ({ style }: Props) => {
     <View style={style}>
       <Formik
         initialValues={initialValues}
-        onSubmit={(values) => onCreateAccount(values)}
+        validationSchema={validationSchema}
+        onSubmit={async (values, { setFieldError }) => {
+          const response = await onCreateAccount(values);
+          if (response) {
+            alert(response);
+            setFieldError("email", response);
+          }
+        }}
       >
-        {({ handleChange, handleBlur, handleSubmit, values }) => (
+        {({ handleChange, handleSubmit, values, errors, touched }) => (
           <View>
             <View style={styles.containerInput}>
               <Input
                 field="Full Name"
                 value={values.fullName}
                 onChangeText={handleChange("fullName")}
+                textError={touched.fullName ? errors.fullName : null}
               />
               <Input
                 field="Email"
                 value={values.email}
                 onChangeText={handleChange("email")}
+                textError={touched.email ? errors.email : null}
               />
               <Input
                 field="Password"
                 value={values.password}
                 onChangeText={handleChange("password")}
                 secureTextEntry={true}
+                textError={touched.password ? errors.password : null}
               />
             </View>
             <ButtonPrimary name="Create Account" onPress={handleSubmit} />

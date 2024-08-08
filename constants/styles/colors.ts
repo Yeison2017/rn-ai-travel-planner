@@ -21,6 +21,18 @@ export const colors = {
   gray900: "#3d3d3d",
   gray950: "#262626",
 
+  red50: "#fff0f0",
+  red100: "#ffdddd",
+  red200: "#ffc0c0",
+  red300: "#ff9494",
+  red400: "#ff5757",
+  red500: "#ff2323",
+  red600: "#ff0000",
+  red700: "#d70000",
+  red800: "#b10303",
+  red900: "#920a0a",
+  red950: "#500000",
+
   light: {
     text: "#11181C",
     background: "#fff",
