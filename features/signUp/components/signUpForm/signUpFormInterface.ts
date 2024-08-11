@@ -1,10 +1,14 @@
-export interface ISignUpForm {
+export interface SignUpForm {
   fullName: string;
   email: string;
   password: string;
 }
 
-export interface IResponseError {
+export interface AuthService {
+  createUser(email: string, password: string): Promise<void>;
+}
+
+export interface ResponseError {
   code: string;
   customData: {
     appName: string;

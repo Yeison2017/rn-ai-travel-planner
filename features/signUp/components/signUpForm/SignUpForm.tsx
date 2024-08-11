@@ -4,6 +4,7 @@ import { Formik } from "formik";
 import { colors, space } from "@/constants/styles";
 import { ButtonPrimary, Input } from "@/components";
 import { SignUpFormController } from "./signUpFormController";
+import FirebaseAuthService from "../../services/firebaseAuthService";
 
 interface Props {
   style?: StyleProp<ViewStyle>;
@@ -22,7 +23,8 @@ const fieldConfigs: FieldConfig[] = [
 ];
 
 const SignUpForm = ({ style }: Props) => {
-  const signUpController = new SignUpFormController();
+  const authService = new FirebaseAuthService();
+  const signUpController = new SignUpFormController(authService);
 
   return (
     <View style={style}>

@@ -1,11 +1,11 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import * as yup from "yup";
 
-import { auth } from "@/configs/FirebaseConfig";
-import { IResponseError, ISignUpForm } from "./signUpFormInterface";
+import { AuthService, ResponseError, SignUpForm } from "./signUpFormInterface";
 
 export class SignUpFormController {
-  static initialValues: ISignUpForm = {
+  constructor(private authService: AuthService) {}
+
+  static initialValues: SignUpForm = {
     fullName: "",
     email: "",
     password: "",
@@ -13,15 +13,15 @@ export class SignUpFormController {
 
   onCreateAccount = async ({
     ...data
-  }: ISignUpForm): Promise<string | undefined> => {
+  }: SignUpForm): Promise<string | undefined> => {
     try {
-      await createUserWithEmailAndPassword(auth, data.email, data.password);
+      await this.authService.createUser(data.email, data.password);
     } catch (error: unknown) {
       return this.errorMessages(error);
     }
   };
 
-  get initialValues(): ISignUpForm {
+  get initialValues(): SignUpForm {
     return SignUpFormController.initialValues;
   }
 
@@ -34,7 +34,7 @@ export class SignUpFormController {
   errorMessages = (error: unknown): string | undefined => {
     console.log("error:", JSON.stringify(error, null, 2));
     if (typeof error === "object") {
-      const errorObj = error as IResponseError;
+      const errorObj = error as ResponseError;
       switch (errorObj.code) {
         case "auth/invalid-email":
           return "Invalid email";
