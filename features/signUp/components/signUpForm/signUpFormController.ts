@@ -1,9 +1,11 @@
+import { inject, autoInjectable } from "tsyringe";
 import * as yup from "yup";
 
 import { AuthService, ResponseError, SignUpForm } from "./signUpFormInterface";
 
+@autoInjectable()
 export class SignUpFormController {
-  constructor(private authService: AuthService) {}
+  constructor(@inject("AuthService") private authService: AuthService) {}
 
   static initialValues: SignUpForm = {
     fullName: "",
@@ -32,7 +34,6 @@ export class SignUpFormController {
   });
 
   errorMessages = (error: unknown): string | undefined => {
-    console.log("error:", JSON.stringify(error, null, 2));
     if (typeof error === "object") {
       const errorObj = error as ResponseError;
       switch (errorObj.code) {

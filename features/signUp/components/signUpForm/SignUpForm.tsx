@@ -1,10 +1,10 @@
+import { container } from "tsyringe";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { Formik } from "formik";
 
 import { colors, space } from "@/constants/styles";
 import { ButtonPrimary, Input } from "@/components";
 import { SignUpFormController } from "./signUpFormController";
-import FirebaseAuthService from "../../services/firebaseAuthService";
 
 interface Props {
   style?: StyleProp<ViewStyle>;
@@ -23,8 +23,7 @@ const fieldConfigs: FieldConfig[] = [
 ];
 
 const SignUpForm = ({ style }: Props) => {
-  const authService = new FirebaseAuthService();
-  const signUpController = new SignUpFormController(authService);
+  const signUpController = container.resolve(SignUpFormController);
 
   return (
     <View style={style}>
@@ -36,8 +35,9 @@ const SignUpForm = ({ style }: Props) => {
           if (response) {
             alert(response);
             setFieldError("email", response);
+          } else {
+            resetForm();
           }
-          resetForm();
         }}
       >
         {({ handleChange, handleSubmit, values, errors, touched }) => (
