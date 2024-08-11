@@ -3,51 +3,54 @@ import { Formik } from "formik";
 
 import { colors, space } from "@/constants/styles";
 import { ButtonPrimary, Input } from "@/components";
-import { initialValues, validationSchema } from "./form";
-import { CreateAccount } from "../../controllers";
+import { SignUpFormController } from "./signUpFormController";
 
 interface Props {
   style?: StyleProp<ViewStyle>;
 }
 
+type FieldConfig = {
+  name: keyof typeof SignUpFormController.initialValues;
+  label: string;
+  secureTextEntry?: boolean;
+};
+
+const fieldConfigs: FieldConfig[] = [
+  { name: "fullName", label: "Full Name" },
+  { name: "email", label: "Email" },
+  { name: "password", label: "Password", secureTextEntry: true },
+];
+
 const SignUpForm = ({ style }: Props) => {
-  const { onCreateAccount } = new CreateAccount();
+  const signUpController = new SignUpFormController();
 
   return (
     <View style={style}>
       <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={async (values, { setFieldError }) => {
-          const response = await onCreateAccount(values);
+        initialValues={signUpController.initialValues}
+        validationSchema={signUpController.validationSchema}
+        onSubmit={async (values, { setFieldError, resetForm }) => {
+          const response = await signUpController.onCreateAccount(values);
           if (response) {
             alert(response);
             setFieldError("email", response);
           }
+          resetForm();
         }}
       >
         {({ handleChange, handleSubmit, values, errors, touched }) => (
           <View>
             <View style={styles.containerInput}>
-              <Input
-                field="Full Name"
-                value={values.fullName}
-                onChangeText={handleChange("fullName")}
-                textError={touched.fullName ? errors.fullName : null}
-              />
-              <Input
-                field="Email"
-                value={values.email}
-                onChangeText={handleChange("email")}
-                textError={touched.email ? errors.email : null}
-              />
-              <Input
-                field="Password"
-                value={values.password}
-                onChangeText={handleChange("password")}
-                secureTextEntry={true}
-                textError={touched.password ? errors.password : null}
-              />
+              {fieldConfigs.map((field) => (
+                <Input
+                  key={field.name}
+                  field={field.label}
+                  value={values[field.name]}
+                  onChangeText={handleChange(field.name)}
+                  textError={touched[field.name] ? errors[field.name] : null}
+                  secureTextEntry={field.secureTextEntry}
+                />
+              ))}
             </View>
             <ButtonPrimary name="Create Account" onPress={handleSubmit} />
           </View>

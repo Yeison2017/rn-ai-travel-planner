@@ -1,2 +1,3 @@
 export { default as SignUpForm } from "./SignUpForm";
-export * from "./form";
+export * from "./signUpFormController";
+export * from "./signUpFormInterface";
