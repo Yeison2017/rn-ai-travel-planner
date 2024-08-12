@@ -2,7 +2,7 @@ import { injectable } from "tsyringe";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
 import { auth } from "@/configs/FirebaseConfig";
-import { AuthService } from "../components/signUpForm/signUpFormInterface";
+import { AuthService } from "./interfaces";
 
 @injectable()
 class FirebaseAuthService implements AuthService {

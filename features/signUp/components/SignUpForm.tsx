@@ -4,23 +4,11 @@ import { Formik } from "formik";
 
 import { colors, space } from "@/constants/styles";
 import { ButtonPrimary, Input } from "@/components";
-import { SignUpFormController } from "./signUpFormController";
+import { SignUpFormController } from "../controllers/signUpFormController";
 
 interface Props {
   style?: StyleProp<ViewStyle>;
 }
-
-type FieldConfig = {
-  name: keyof typeof SignUpFormController.initialValues;
-  label: string;
-  secureTextEntry?: boolean;
-};
-
-const fieldConfigs: FieldConfig[] = [
-  { name: "fullName", label: "Full Name" },
-  { name: "email", label: "Email" },
-  { name: "password", label: "Password", secureTextEntry: true },
-];
 
 const SignUpForm = ({ style }: Props) => {
   const signUpController = container.resolve(SignUpFormController);
@@ -43,7 +31,7 @@ const SignUpForm = ({ style }: Props) => {
         {({ handleChange, handleSubmit, values, errors, touched }) => (
           <View>
             <View style={styles.containerInput}>
-              {fieldConfigs.map((field) => (
+              {signUpController.fieldConfigs.map((field) => (
                 <Input
                   key={field.name}
                   field={field.label}

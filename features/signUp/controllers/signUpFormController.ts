@@ -1,10 +1,17 @@
 import { inject, autoInjectable } from "tsyringe";
 import * as yup from "yup";
 
-import { AuthService, ResponseError, SignUpForm } from "./signUpFormInterface";
+import {
+  FieldConfigSignUpForm,
+  SignUpForm,
+} from "../interfaces/signUpFormInterface";
+import { FormControllerInterface, ResponseError } from "@/interfaces";
+import { AuthService } from "../services/interfaces";
 
 @autoInjectable()
-export class SignUpFormController {
+export class SignUpFormController
+  implements FormControllerInterface<SignUpForm>
+{
   constructor(@inject("AuthService") private authService: AuthService) {}
 
   static initialValues: SignUpForm = {
@@ -13,19 +20,15 @@ export class SignUpFormController {
     password: "",
   };
 
-  onCreateAccount = async ({
-    ...data
-  }: SignUpForm): Promise<string | undefined> => {
-    try {
-      await this.authService.createUser(data.email, data.password);
-    } catch (error: unknown) {
-      return this.errorMessages(error);
-    }
-  };
-
   get initialValues(): SignUpForm {
     return SignUpFormController.initialValues;
   }
+
+  fieldConfigs: FieldConfigSignUpForm[] = [
+    { name: "fullName", label: "Full Name" },
+    { name: "email", label: "Email" },
+    { name: "password", label: "Password", secureTextEntry: true },
+  ];
 
   validationSchema = yup.object().shape({
     fullName: yup.string().required("Full Name is required"),
@@ -54,5 +57,15 @@ export class SignUpFormController {
       }
     }
     return undefined;
+  };
+
+  onCreateAccount = async ({
+    ...data
+  }: SignUpForm): Promise<string | undefined> => {
+    try {
+      await this.authService.createUser(data.email, data.password);
+    } catch (error: unknown) {
+      return this.errorMessages(error);
+    }
   };
 }
