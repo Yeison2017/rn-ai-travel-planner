@@ -15,9 +15,10 @@ import {
 
 interface Props extends TextInputProps {
   field: string;
+  textError?: string | null;
 }
 
-const Input = ({ field, ...props }: Props) => {
+const Input = ({ field, textError, ...props }: Props) => {
   return (
     <View>
       <Text style={styles.field}>{field}</Text>
@@ -26,6 +27,7 @@ const Input = ({ field, ...props }: Props) => {
         style={styles.textInput}
         {...props}
       />
+      {textError ? <Text style={styles.textError}>{textError}</Text> : null}
     </View>
   );
 };
@@ -45,5 +47,10 @@ const styles = StyleSheet.create({
     borderRadius: borderRadius.sm,
     fontFamily: fontFamily.primaryRegular,
     fontSize: fontSize.md,
+  },
+  textError: {
+    color: colors.red700,
+    fontFamily: fontFamily.primaryRegular,
+    fontSize: fontSize.sm,
   },
 });

@@ -1,11 +1,5 @@
-import { View } from "react-native";
-
-import Login from "@/components/Login";
+import { Login } from "@/features/login";
 
 export default function Index() {
-  return (
-    <View>
-      <Login />
-    </View>
-  );
+  return <Login />;
 }

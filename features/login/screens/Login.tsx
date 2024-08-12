@@ -1,13 +1,41 @@
 import { StyleSheet, View, Image } from "react-native";
 import { useRouter } from "expo-router";
+import { CohereClient } from "cohere-ai";
 
 import { IMAGES } from "@/constants/images";
 import { borderRadius, colors, space } from "@/constants/styles";
-import { Paragraph, Title } from "./texts";
-import { ButtonPrimary } from "./buttons";
+import { ButtonPrimary, Paragraph, Title } from "@/components";
+import { useEffect } from "react";
+
+const cohere = new CohereClient({
+  token: "HNfP0TndCE2v0fvx2P8ZxxLFTEgPLc9gAxvkNP2M",
+});
 
 const Login = () => {
   const router = useRouter();
+
+  const generateChat = async () => {
+    const chat = await cohere.chat({
+      model: "command",
+      message:
+        "Genera una conversación corta en ingles de dos personas. La conversación debe ser facil para aprender y entender. Debe ser corta, no más de 100 palabras. Para estudiantes de nivel A1",
+    });
+
+    console.log(chat);
+  };
+
+  // useEffect(() => {
+  //   (async () => {
+  //     const chat = await cohere.chat({
+  //       model: "command",
+  //       // message: "Tell me a story in 5 parts!",
+  //       message:
+  //         "Genera una conversación corta en ingles de dos personas. Facil para aprender y entender.",
+  //     });
+
+  //     console.log(chat);
+  //   })();
+  // }, []);
 
   return (
     <View>
@@ -20,7 +48,8 @@ const Login = () => {
           style={styles.paragraph}
         />
         <ButtonPrimary
-          onPress={() => router.push("auth/sign-in")}
+          onPress={() => router.push("/auth/sign-in")}
+          // onPress={() => generateChat()}
           name="Get Started"
           style={styles.buttonPrimary}
         />
