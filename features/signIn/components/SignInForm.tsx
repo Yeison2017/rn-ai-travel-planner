@@ -1,4 +1,5 @@
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { useRouter } from "expo-router";
 import { Formik } from "formik";
 import { container } from "tsyringe";
 
@@ -11,6 +12,8 @@ interface Props {
 }
 
 const SignInForm = ({ style }: Props) => {
+  const router = useRouter();
+
   const signInController = container.resolve(SignInController);
 
   return (
@@ -18,10 +21,13 @@ const SignInForm = ({ style }: Props) => {
       <Formik
         initialValues={signInController.initialValues}
         validationSchema={signInController.validationSchema}
-        onSubmit={async (values) => {
+        onSubmit={async (values, { resetForm }) => {
           const response = await signInController.onSignIn(values);
           if (response) {
             alert(response);
+          } else {
+            router.replace("/mytrip");
+            resetForm();
           }
         }}
       >

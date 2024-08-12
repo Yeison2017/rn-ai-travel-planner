@@ -1,5 +1,6 @@
 import { container } from "tsyringe";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { useRouter } from "expo-router";
 import { Formik } from "formik";
 
 import { colors, space } from "@/constants/styles";
@@ -11,6 +12,7 @@ interface Props {
 }
 
 const SignUpForm = ({ style }: Props) => {
+  const router = useRouter();
   const signUpController = container.resolve(SignUpFormController);
 
   return (
@@ -24,6 +26,7 @@ const SignUpForm = ({ style }: Props) => {
             alert(response);
             setFieldError("email", response);
           } else {
+            router.replace("/mytrip");
             resetForm();
           }
         }}
